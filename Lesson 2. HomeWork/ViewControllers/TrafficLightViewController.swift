@@ -20,6 +20,14 @@ final class TrafficLightViewController: UIViewController {
         setupView()
     }
     
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        
+        trafficLightRedView.layer.cornerRadius = trafficLightRedView.frame.width / 2
+        trafficLightYellowView.layer.cornerRadius = trafficLightRedView.frame.width / 2
+        trafficLightGreenView.layer.cornerRadius = trafficLightRedView.frame.width / 2
+    }
+    
     //MARK: - Change color method
     @objc
     func changeColor() {
@@ -77,30 +85,29 @@ private extension TrafficLightViewController {
     func setupStack() {
         stackViewConteiner.axis = .vertical
         stackViewConteiner.spacing = 30
-        stackViewConteiner.distribution = .equalSpacing
+        stackViewConteiner.distribution = .fillEqually
+        stackViewConteiner.alignment = .fill
         
-        stackViewConteiner.addArrangedSubview(trafficLightRedView)
-        stackViewConteiner.addArrangedSubview(trafficLightYellowView)
-        stackViewConteiner.addArrangedSubview(trafficLightGreenView)
+        [trafficLightRedView, trafficLightYellowView, trafficLightGreenView].forEach { stackViewConteiner.addArrangedSubview($0) }
     }
 }
 
 //MARK: - Layout
 private extension TrafficLightViewController {
     func setupLayout() {
-        [trafficLightButton,stackViewConteiner].forEach {
+        [trafficLightButton, stackViewConteiner, trafficLightRedView, trafficLightYellowView, trafficLightGreenView].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
         }
 
         NSLayoutConstraint.activate([
-            trafficLightButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -40),
-            trafficLightButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            trafficLightButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.7),
-            trafficLightButton.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.07),
+            trafficLightButton.heightAnchor.constraint(equalToConstant: 40),
+            trafficLightButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 100),
+            trafficLightButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -100),
+            trafficLightButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -30),
             
+            stackViewConteiner.topAnchor.constraint(equalTo: view.topAnchor, constant: 70),
             stackViewConteiner.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            stackViewConteiner.topAnchor.constraint(equalTo: view.topAnchor, constant: 100),
-            stackViewConteiner.bottomAnchor.constraint(equalTo: trafficLightButton.topAnchor, constant: -100),
+            stackViewConteiner.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.7)
         ])
     }
 }

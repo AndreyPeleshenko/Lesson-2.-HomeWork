@@ -19,7 +19,6 @@ final class CustomView: UIView {
         setupLayout()
         
         backgroundColor = color
-        layer.cornerRadius = 75
         alpha = 0.3
     }
 }
@@ -30,8 +29,7 @@ private extension CustomView {
     func setupLayout() {
         translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            widthAnchor.constraint(equalToConstant: 150),
-            heightAnchor.constraint(equalToConstant: 150)
+            widthAnchor.constraint(equalTo: heightAnchor, multiplier: 1)
         ])
     }
 }
